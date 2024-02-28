@@ -42,6 +42,7 @@ public class LoginService {
 
 	public void displayAdminMenu(Connection conn) throws SQLException {
 		int choice;
+		BookService bookService = new BookService();
 
 		do {
 			System.out.println("========================================");
@@ -63,10 +64,13 @@ public class LoginService {
 				searchBook(conn);
 				break;
 			case 2:
+				bookService.addBook(conn);
 				break;
 			case 3:
+				bookService.updateBookQty(conn);
 				break;
 			case 4:
+				bookService.getAllBooks(conn);
 				break;
 			case 5:
 				break;
