@@ -7,6 +7,7 @@ import java.util.Scanner;
 import com.jts.lms.dao.DatabaseService;
 import com.jts.lms.dao.LoginDao;
 import com.jts.lms.service.BookService;
+import com.jts.lms.service.StudentService;
 
 public class LoginService {
 	Scanner sc = new Scanner(System.in);
@@ -35,6 +36,7 @@ public class LoginService {
 				displayAdminMenu(conn);
 			} else {
 				// display student related menu
+				displayStudentMenu(conn);
 			}
 		}
 
@@ -43,6 +45,7 @@ public class LoginService {
 	public void displayAdminMenu(Connection conn) throws SQLException {
 		int choice;
 		BookService bookService = new BookService();
+		StudentService studentService = new StudentService();
 
 		do {
 			System.out.println("========================================");
@@ -73,17 +76,58 @@ public class LoginService {
 				bookService.getAllBooks(conn);
 				break;
 			case 5:
+				studentService.addStudent(conn);
 				break;
 			case 6:
+				studentService.getAllStudents(conn);
 				break;
 			case 7:
 				System.out.println("Thank You for using Library Managemnet System.");
+				System.exit(0);
 				break;
 			default:
 				System.out.println("Please select valid option.");
 			}
 
 		} while (choice != 7);
+	}
+	
+	public void displayStudentMenu(Connection conn) throws SQLException {
+		int choice;
+		BookService bookService = new BookService();
+		StudentService studentService = new StudentService();
+
+		do {
+			System.out.println("========================================");
+			System.out.println(" 1. Search a Book.");
+			System.out.println(" 2. Check out Book.");
+			System.out.println(" 3. Check in Book.");
+			System.out.println(" 4. Exit From Application.");
+			System.out.println("========================================");
+
+			System.out.println("Please Enter your choice.");
+
+			choice = sc.nextInt();
+
+			switch (choice) {
+			case 1:
+				searchBook(conn);
+				break;
+			case 2:
+				bookService.checkOutBook(conn);
+				break;
+			case 3:
+				bookService.checkInBook(conn);
+				break;
+			case 4:
+				System.out.println("Thank You for using Library Managemnet System.");
+				System.exit(0);
+				break;
+			default:
+				System.out.println("Please select valid option.");
+			}
+
+		} while (choice != 4);
 	}
 	
 	private void searchBook(Connection conn) throws SQLException {
